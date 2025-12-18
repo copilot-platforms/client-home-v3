@@ -1,5 +1,5 @@
 import status from 'http-status'
-import { baseServerErrorFactory } from '@/errors/base-server-error'
+import { baseServerErrorFactory } from '@/errors/base-server.error'
 
 /**
  * Raised when token provided to server component / action / API route cannot be decrypted / has invalid payload

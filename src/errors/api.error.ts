@@ -1,4 +1,4 @@
-import { BaseServerError } from '@/errors/base-server-error'
+import { BaseServerError } from '@/errors/base-server.error'
 
 class APIError extends BaseServerError {
   constructor(
