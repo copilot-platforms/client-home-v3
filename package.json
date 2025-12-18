@@ -16,8 +16,14 @@
     "ex": "tsx --tsconfig tsx.tsconfig.json --require dotenv/config --require tsconfig-paths/register"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.31.0",
+    "bottleneck": "^2.19.5",
+    "copilot-design-system": "^2.3.2",
+    "copilot-node-sdk": "^3.16.0",
     "dotenv": "^17.2.3",
+    "http-status": "^2.1.0",
     "next": "16.0.10",
+    "p-retry": "^7.1.1",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "zod": "^4.2.1"
