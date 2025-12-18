@@ -3,8 +3,9 @@ import httpStatus from 'http-status'
 import { type NextRequest, NextResponse } from 'next/server'
 import z, { ZodError } from 'zod'
 import env from '@/config/env'
-import APIError from '@/errors/api-error'
-import type { StatusableError } from '@/errors/base-server-error'
+import APIError from '@/errors/api.error'
+import type { StatusableError } from '@/errors/base-server.error'
+import { NotFoundError } from '@/errors/not-found.error'
 import logger from '@/lib/logger'
 
 type RequestHandler = (req: NextRequest, params: unknown) => Promise<NextResponse>
@@ -37,7 +38,10 @@ export const withErrorHandler = (handler: RequestHandler): RequestHandler => {
       let status: number = (error as StatusableError).status || httpStatus.INTERNAL_SERVER_ERROR
 
       // Build a proper response based on the type of Error encountered
-      if (error instanceof ZodError) {
+      if (error instanceof NotFoundError) {
+        status = httpStatus.NOT_FOUND
+        message = 'Not Found'
+      } else if (error instanceof ZodError) {
         status = httpStatus.UNPROCESSABLE_ENTITY
         // Prevent leaking internal details of app
         message = env.VERCEL_ENV === 'production' ? 'Failed to parse request body' : z.prettifyError(error)
@@ -64,7 +68,16 @@ export const withErrorHandler = (handler: RequestHandler): RequestHandler => {
         logger.error('Unhandled error :: ', error)
       }
 
-      return NextResponse.json({ error: message }, { status })
+      // Return a JSON error response instead of HTML error page for API routes
+      // In the past we have struggled a lot with "Failed to parse JSON from "<!DOCTYPE..." kind of errors
+      if (req.nextUrl.pathname.includes('/api') || req.nextUrl.pathname.includes('/cron')) {
+        return NextResponse.json({ error: message }, { status })
+      } else {
+        return new NextResponse(message, {
+          status,
+          headers: { 'Content-Type': 'text/plain' },
+        })
+      }
     }
   }
 }

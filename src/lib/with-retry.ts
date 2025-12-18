@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/nextjs'
 
 import pRetry from 'p-retry'
-import type { StatusableError } from '@/errors/base-server-error'
+import type { StatusableError } from '@/errors/base-server.error'
 import logger from '@/lib/logger'
 
 export const withRetry = async <Args extends unknown[], R>(
