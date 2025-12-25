@@ -1,6 +1,6 @@
+import { settings } from '@settings/lib/settings.schema'
 import { boolean, index, pgTable, unique, uuid } from 'drizzle-orm/pg-core'
 import { id, timestamps, workspaceId } from '@/db/helpers'
-import { settings } from '@/features/settings/lib/settings.schema'
 
 export const actions = pgTable(
   'actions',
