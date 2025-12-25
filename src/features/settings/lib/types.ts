@@ -1,6 +1,6 @@
+import { settings } from '@settings/lib/settings.schema'
 import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-zod'
 import type z from 'zod'
-import { settings } from '@/features/settings/lib/settings.schema'
 
 export const SettingsSchema = createSelectSchema(settings)
 

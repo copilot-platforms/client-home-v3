@@ -1,9 +1,9 @@
 import type { Settings } from '@settings/lib/settings.entity'
+import { settings } from '@settings/lib/settings.schema'
 import type { SettingsCreatePayload } from '@settings/lib/types'
 import { eq } from 'drizzle-orm'
 import httpStatus from 'http-status'
 import APIError from '@/errors/api.error'
-import { settings } from '@/features/settings/lib/settings.schema'
 import BaseDrizzleRepository from '@/lib/core/base-drizzle.repository'
 
 /**

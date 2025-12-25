@@ -1,6 +1,6 @@
+import { media } from '@media/lib/media.schema'
 import { index, pgTable, text, uuid, varchar } from 'drizzle-orm/pg-core'
 import { id, timestamps, workspaceId } from '@/db/helpers'
-import { media } from '@/features/media/lib/media.schema'
 
 export const settings = pgTable(
   'settings',
