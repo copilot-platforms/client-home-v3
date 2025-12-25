@@ -1,12 +1,12 @@
-import { boolean, index, pgTable, unique, uuid, varchar } from 'drizzle-orm/pg-core'
-import { timestamps } from '@/db/helpers'
+import { boolean, index, pgTable, unique, uuid } from 'drizzle-orm/pg-core'
+import { id, timestamps, workspaceId } from '@/db/helpers'
 import { settings } from '@/features/settings/lib/settings.schema'
 
 export const actions = pgTable(
   'actions',
   {
-    id: uuid().primaryKey().notNull().defaultRandom(),
-    workspaceId: varchar({ length: 16 }).notNull(),
+    id,
+    workspaceId,
 
     settings_id: uuid()
       .references(() => settings.id, { onDelete: 'cascade' })
