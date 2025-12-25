@@ -1,6 +1,6 @@
 CREATE TABLE "media" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"workspace_id" varchar(16) NOT NULL,
+	"workspace_id" varchar(32) NOT NULL,
 	"created_by_id" uuid NOT NULL,
 	"name" varchar(1028) NOT NULL,
 	"path" varchar(1028) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE "media" (
 
 CREATE TABLE "actions" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"workspace_id" varchar(16) NOT NULL,
+	"workspace_id" varchar(32) NOT NULL,
 	"settings_id" uuid NOT NULL,
 	"invoices" boolean DEFAULT false NOT NULL,
 	"messages" boolean DEFAULT false NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE "actions" (
 
 CREATE TABLE "settings" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"workspace_id" varchar(16) NOT NULL,
+	"workspace_id" varchar(32) NOT NULL,
 	"content" text NOT NULL,
 	"background_color" varchar(16) DEFAULT '#ffffff' NOT NULL,
 	"banner_image_id" uuid,
