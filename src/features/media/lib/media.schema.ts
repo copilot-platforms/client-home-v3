@@ -1,11 +1,11 @@
 import { index, pgTable, uuid, varchar } from 'drizzle-orm/pg-core'
-import { timestamps } from '@/db/helpers'
+import { id, timestamps, workspaceId } from '@/db/helpers'
 
 export const media = pgTable(
   'media',
   {
-    id: uuid().primaryKey().notNull().defaultRandom(),
-    workspaceId: varchar({ length: 16 }).notNull(),
+    id,
+    workspaceId,
 
     // ID of internal user that uploaded the image
     createdById: uuid().notNull(),

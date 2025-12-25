@@ -1,12 +1,12 @@
 import { index, pgTable, text, uuid, varchar } from 'drizzle-orm/pg-core'
-import { timestamps } from '@/db/helpers'
+import { id, timestamps, workspaceId } from '@/db/helpers'
 import { media } from '@/features/media/lib/media.schema'
 
 export const settings = pgTable(
   'settings',
   {
-    id: uuid().primaryKey().notNull().defaultRandom(),
-    workspaceId: varchar({ length: 16 }).notNull(),
+    id,
+    workspaceId,
 
     // Editor content
     content: text().notNull(),

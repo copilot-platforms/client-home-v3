@@ -1,7 +1,7 @@
 import type AssemblyClient from '@assembly/assembly-client'
 import type { User } from '@auth/lib/user.entity'
+import { defaultContent } from '@settings/lib/constants'
 import type SettingsRepository from '@settings/lib/settings.repository'
-import type { SettingsCreatePayload } from '@settings/lib/types'
 import BaseService from '@/lib/core/base.service'
 
 export default class SettingsService extends BaseService {
@@ -13,15 +13,11 @@ export default class SettingsService extends BaseService {
     super(user, assembly)
   }
 
-  async getForWorkspace() {
-    let settings = await this.repository.getOne(this.user.workspaceId)
-    if (!settings) {
-      settings = await this.repository.createOne(this.user.workspaceId, {
-        content: '',
-        backgroundColor: '#fff',
-        bannerImageId: null,
-      })
-    }
-    return settings
+  getForWorkspace() {
+    return this.repository.getOrCreate(this.user.workspaceId, {
+      content: defaultContent,
+      // We can add default banner img here later
+      // bannerImageId: null,
+    })
   }
 }
