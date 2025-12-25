@@ -1,5 +1,5 @@
 {
-  "id": "5aca1c55-e1d5-449c-9250-705d3d32f902",
+  "id": "f4730ad6-1948-48ed-bd2a-5d5c8e94e81c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -17,7 +17,7 @@
         },
         "workspace_id": {
           "name": "workspace_id",
-          "type": "varchar(16)",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": true
         },
@@ -109,7 +109,7 @@
         },
         "workspace_id": {
           "name": "workspace_id",
-          "type": "varchar(16)",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": true
         },
@@ -222,7 +222,7 @@
         },
         "workspace_id": {
           "name": "workspace_id",
-          "type": "varchar(16)",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": true
         },

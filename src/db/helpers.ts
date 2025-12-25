@@ -1,4 +1,4 @@
-import { type AnyPgColumn, type AnyPgTable, timestamp } from 'drizzle-orm/pg-core'
+import { type AnyPgColumn, type AnyPgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
 export const timestamps = {
   // use timestamptz for timezone support via withTimezone: true
@@ -8,6 +8,9 @@ export const timestamps = {
     .notNull()
     .$onUpdate(() => new Date()),
 }
+
+export const id = uuid().primaryKey().notNull().defaultRandom()
+export const workspaceId = varchar({ length: 32 }).notNull()
 
 type TableColumns<TTable extends AnyPgTable> = TTable['_']['columns']
 
