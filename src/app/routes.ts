@@ -13,6 +13,6 @@ const ROUTES = Object.freeze({
  */
 export const authorizedRoutes: Record<string, string[]> = {
   public: [ROUTES.api.health],
-  internalUsers: [ROUTES.home],
-  clientUsers: [ROUTES.client],
+  internalUsers: [ROUTES.home, ROUTES.api.settings],
+  clientUsers: [ROUTES.client, ROUTES.api.settings],
 }
