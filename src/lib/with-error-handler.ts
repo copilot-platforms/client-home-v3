@@ -73,10 +73,8 @@ export const withErrorHandler = (handler: RequestHandler): RequestHandler => {
       if (req.nextUrl.pathname.includes('/api') || req.nextUrl.pathname.includes('/cron')) {
         return NextResponse.json({ error: message }, { status })
       } else {
-        return new NextResponse(message, {
-          status,
-          headers: { 'Content-Type': 'text/plain' },
-        })
+        // Let NextJS' error boundary handle this
+        return NextResponse.next()
       }
     }
   }

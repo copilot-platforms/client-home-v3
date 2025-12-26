@@ -6,8 +6,6 @@ import {
   type ClientResponse,
   ClientResponseSchema,
   ClientsResponseSchema,
-  type ClientToken,
-  ClientTokenSchema,
   type CompaniesResponse,
   CompaniesResponseSchema,
   type CompanyCreateRequest,
@@ -17,8 +15,8 @@ import {
   InternalUserResponseSchema,
   type InternalUsersResponse,
   InternalUsersResponseSchema,
-  type InternalUserToken,
-  InternalUserTokenSchema,
+  type Token,
+  TokenSchema,
   type WorkspaceResponse,
   WorkspaceResponseSchema,
 } from '@assembly/types'
@@ -27,6 +25,7 @@ import { copilotApi } from 'copilot-node-sdk'
 import env from '@/config/env'
 import logger from '@/lib/logger'
 import { withRetry } from '@/lib/with-retry'
+import { AssemblyInvalidTokenError } from './errors'
 
 export default class AssemblyClient {
   readonly assembly: SDK
@@ -35,17 +34,21 @@ export default class AssemblyClient {
     private readonly token: string,
     readonly customApiKey?: string,
   ) {
-    this.assembly = copilotApi({
-      apiKey: customApiKey ?? env.ASSEMBLY_API_KEY,
-      token,
-    })
+    try {
+      this.assembly = copilotApi({
+        apiKey: customApiKey ?? env.ASSEMBLY_API_KEY,
+        token,
+      })
+    } catch (_e) {
+      throw new AssemblyInvalidTokenError()
+    }
   }
 
   // NOTE: Any method prefixed with _ is a API method that doesn't implement retry & delay
   // NOTE: Any normal API method name implements `withRetry` with default config
 
   // Get Token Payload from assembly request token
-  async _getTokenPayload(): Promise<InternalUserToken | ClientToken | null> {
+  async _getTokenPayload(): Promise<Token | null> {
     const getTokenPayload = this.assembly.getTokenPayload
     if (!getTokenPayload) {
       logger.error(`AssemblyClient#getTokenPayload | Could not parse token payload for token ${this.token}`)
@@ -53,12 +56,7 @@ export default class AssemblyClient {
     }
 
     const tokenPayload = await getTokenPayload()
-    if (tokenPayload.internalUserId) {
-      return InternalUserTokenSchema.parse(tokenPayload)
-    } else if (tokenPayload.clientId) {
-      return ClientTokenSchema.parse(tokenPayload)
-    }
-    return null
+    return TokenSchema.parse(tokenPayload)
   }
 
   async _getWorkspace(): Promise<WorkspaceResponse> {
