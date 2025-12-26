@@ -82,7 +82,7 @@ export const withErrorHandler = (handler: RequestHandler): RequestHandler => {
   }
 }
 
-function buildErrorPage(status: httpStatus, message: string) {
+function buildErrorPage(status: number, message: string) {
   return `
     <!DOCTYPE html>
     <html lang="en">
