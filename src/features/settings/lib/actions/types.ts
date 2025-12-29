@@ -1,6 +1,6 @@
+import { actions } from '@settings/lib/actions/actions.schema'
 import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-zod'
 import type z from 'zod'
-import { actions } from './actions.schema'
 
 export const ActionsSchema = createSelectSchema(actions)
 
